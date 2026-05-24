@@ -40,7 +40,10 @@ pipeline {
                 branch 'production'
             }
             steps {
-                echo 'Deploy ke Minikube... (coming soon)'
+                sh '''
+                    kubectl apply -f k8s/deployment.yaml
+                    kubectl rollout status deployment/react-default -n devops
+                '''
             }
         }
     }
