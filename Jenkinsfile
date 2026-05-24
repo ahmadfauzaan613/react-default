@@ -31,6 +31,7 @@ pipeline {
             }
             steps {
                 sh 'docker build -t react-default:${BUILD_NUMBER} .'
+                sh 'docker tag react-default:${BUILD_NUMBER} react-default:latest'
                 echo "Docker image react-default:${BUILD_NUMBER} berhasil dibuat!"
             }
         }
