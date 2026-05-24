@@ -14,6 +14,7 @@ pipeline {
         
         stage('Install') {
             steps {
+                sh 'node --version'
                 sh 'npm install'
             }
         }
@@ -23,32 +24,33 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        
+
         stage('Docker Build') {
             when {
-                branch 'prod'
+                branch 'production'
             }
             steps {
                 sh 'docker build -t react-default:${BUILD_NUMBER} .'
+                echo "Docker image react-default:${BUILD_NUMBER} berhasil dibuat!"
             }
         }
         
-        stage('Deploy') {
+        stage('Deploy ke Minikube') {
             when {
-                branch 'prod'
+                branch 'production'
             }
             steps {
-                echo 'Deploy ke Minikube...'
+                echo 'Deploy ke Minikube... (coming soon)'
             }
         }
     }
     
     post {
         success {
-            echo 'Pipeline berhasil!'
+            echo "Pipeline branch ${BRANCH_NAME} berhasil!"
         }
         failure {
-            echo 'Pipeline gagal!'
+            echo "Pipeline branch ${BRANCH_NAME} gagal!"
         }
     }
 }
